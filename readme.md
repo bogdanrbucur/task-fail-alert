@@ -9,7 +9,7 @@ Script to monitor Windows Scheduled Tasks and send an email alert using on-prem 
 
 ### config.json
 
-Use `taskNames` array to add the task names to monitor.
+Rename `config.template.json` to `config.json` and fill the required credentials to use the application.
 
 - `taskNames`: array of task names
 - `emailRecipients`: string of recipients of the email notification in format `"user1@email.com; user2@email.com"`
