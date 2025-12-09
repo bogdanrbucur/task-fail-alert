@@ -1,14 +1,17 @@
 import nodemailer from "nodemailer";
-import fs from "fs-extra";
-import path from "path";
+import { getAccessToken, getOAuthConfig } from "./oauth.js";
 
-// Read oauth_config.json using fs-extra
-const emailOAuth = await fs.readJson(path.resolve("C:/_Projects/_oauth_config/oauth_config.json"));
+// oauth helpers are in oauth.js - import getAccessToken & getOAuthConfig
 
 export default async function mailer(recipients, bodyArray, emailAuth, emailHost, emailPort) {
+	// Ensure we have a fresh access token before creating transporter
+	const accessToken = await getAccessToken();
+
+	// pull oauth config used for building the auth block
+	const emailOAuth = getOAuthConfig();
+
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
-		// @ts-ignore
 		host: "smtp.office365.com",
 		port: 587,
 		secure: false,
@@ -17,9 +20,7 @@ export default async function mailer(recipients, bodyArray, emailAuth, emailHost
 			user: emailOAuth.mailbox,
 			clientId: emailOAuth.applicationId,
 			clientSecret: emailOAuth.clientSecret,
-			refreshToken: emailOAuth.refreshToken,
-			accessUrl: `https://login.microsoftonline.com/${emailOAuth.tenantId}/oauth2/v2.0/token`,
-			scope: "https://outlook.office365.com/.default",
+			accessToken,
 		},
 		tls: {
 			ciphers: "SSLv3",
