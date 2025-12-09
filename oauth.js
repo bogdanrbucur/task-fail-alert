@@ -3,8 +3,9 @@ import https from "https";
 import path from "path";
 import { URL } from "url";
 
-// NOTE: same external path as before — keep this path if you rely on that layout
-const OAUTH_CONFIG_PATH = path.resolve("C:/_Projects/_oauth_config/oauth_config.json");
+// read the path from config.json oauthConfigPath prop
+const config = await fs.readJson(path.resolve("config.json"));
+const OAUTH_CONFIG_PATH = path.resolve(config.oauthConfigPath);
 
 // Load OAuth data (mailbox, tenantId, applicationId, clientSecret, refreshToken etc.)
 let emailOAuth = await fs.readJson(OAUTH_CONFIG_PATH);
