@@ -1,7 +1,5 @@
 {
 	"taskNames": ["test"],
 	"emailRecipients": "bogdanb-it@asm-maritime.com",
-	"emailAuth": { "user": "", "pass": "123456" },
-	"emailHost": "192.168.XXX.XXX",
-	"emailPort": 465
+	"oauthConfigPath": "C:/_Projects/_oauth_config/oauth_config.json"
 }
