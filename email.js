@@ -1,14 +1,28 @@
 import nodemailer from "nodemailer";
+import fs from "fs-extra";
+import path from "path";
+
+// Read oauth_config.json using fs-extra
+const emailOAuth = await fs.readJson(path.resolve("C:/_Projects/_oauth_config/oauth_config.json"));
 
 export default async function mailer(recipients, bodyArray, emailAuth, emailHost, emailPort) {
 	// create reusable transporter object using the default SMTP transport
 	let transporter = nodemailer.createTransport({
-		host: emailHost,
-		port: emailPort,
-		secure: false, // true for 465, false for other ports
-		auth: emailAuth,
+		// @ts-ignore
+		host: "smtp.office365.com",
+		port: 587,
+		secure: false,
+		auth: {
+			type: "OAuth2",
+			user: emailOAuth.mailbox,
+			clientId: emailOAuth.applicationId,
+			clientSecret: emailOAuth.clientSecret,
+			refreshToken: emailOAuth.refreshToken,
+			accessUrl: `https://login.microsoftonline.com/${emailOAuth.tenantId}/oauth2/v2.0/token`,
+			scope: "https://outlook.office365.com/.default",
+		},
 		tls: {
-			rejectUnauthorized: false,
+			ciphers: "SSLv3",
 		},
 	});
 
@@ -31,7 +45,7 @@ export default async function mailer(recipients, bodyArray, emailAuth, emailHost
 
 	// send mail with defined transport object
 	let info = await transporter.sendMail({
-		from: "Failed Tasks <pal-notification@asm-maritime.com>", // sender address
+		from: emailOAuth.mailbox, // sender address
 		to: recipients, // list of receivers
 		subject: `Failed tasks on NL-Bogdan ⚠️`, // Subject line
 		// text: text, // plain text body
