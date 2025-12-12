@@ -1,5 +1,31 @@
 {
-	"taskNames": ["test"],
+	"taskNames": [
+		"Crew-Days",
+		"Daily PAL to PB LogBook extract",
+		"Monthly PAL DCS-CII reports",
+		"Overdue drills",
+		"Overdue Port Screening",
+		"PAL EUMRV-ETS reports",
+		"PAL Spares Autoimport",
+		"pal-alloc-v2",
+		"PSC Reports",
+		"Shipsat-Connection",
+		"Start Nextjs app",
+		"Start nginx at startup",
+		"Start Pocketbase DB",
+		"tech-reports-v2",
+		"Upcoming crew changes",
+		"Vondelgym",
+		"VT-139-download",
+		"Check duplicate PB EUMRV entries",
+		"PRC KPI Report",
+		"pending-pms-jobs",
+		"daily-voyage-data-extract",
+		"ITF OT",
+		"Biofuel Missing PoS",
+		"Daily EUA prices update",
+		"Vessel RPM Alarm"
+	],
 	"emailRecipients": "bogdanb-it@asm-maritime.com",
 	"oauthConfigPath": "C:/_Projects/_oauth_config/oauth_config.json"
 }
